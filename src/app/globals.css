@@ -126,3 +126,9 @@
   --color-dark-2: #161925;
   --color-blue-1: #0E78F9;
 }
+
+@layer utilities {
+  .flex-between {
+    @apply flex justify-between;
+  }
+}
