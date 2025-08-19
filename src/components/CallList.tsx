@@ -59,6 +59,7 @@ const CallList = ({ type }: { type: CallListType }) => {
         setRecordings(recordings);
       } catch (error) {
         toast.error("Try again later");
+        console.log(error);
       }
     };
 
@@ -73,9 +74,9 @@ const CallList = ({ type }: { type: CallListType }) => {
   return (
     <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
       {calls && calls.length > 0 ? (
-        calls.map((meeting: Call | CallRecording) => (
+        calls.map((meeting: Call | CallRecording, index: number) => (
           <MeetingCard
-            key={(meeting as Call).id}
+            key={index}
             icon={
               type === "ended"
                 ? "/icons/previous.svg"
@@ -84,9 +85,9 @@ const CallList = ({ type }: { type: CallListType }) => {
                 : "/icons/recordings.svg"
             }
             title={
-              meeting.state?.custom.description.substring(0, 26) ||
-              meeting.filename.substring(0, 20) ||
-              "No description"
+              meeting.state?.custom?.description?.substring(0, 26) ||
+              meeting?.filename?.substring(0, 20) ||
+              "Personal Meeting"
             }
             date={
               meeting.state?.startsAt.toLocaleString() ||
