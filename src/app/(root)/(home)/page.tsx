@@ -1,11 +1,33 @@
+"use client";
+
 import MeetingTypeList from "@/components/MeetingTypeList";
 import { Bell } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
-  const now = new Date();
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
 
-  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-  const date = (new Intl.DateTimeFormat('en-US', { dateStyle: 'full' })).format(now);
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
+      setDate(
+        new Intl.DateTimeFormat("en-US", {
+          dateStyle: "full",
+        }).format(now)
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000 * 60); 
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="flex flex-col gap-5 text-white size-full">
